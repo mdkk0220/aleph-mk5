@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react";
+import { storage } from "../storage.js";
 import {
   Image as ImageIcon,
   Type,
@@ -114,7 +115,7 @@ export default function EditPreviewCard4() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await window.storage.get(TEMPLATES_KEY, false);
+        const res = await storage.get(TEMPLATES_KEY);
         const parsed = res?.value ? JSON.parse(res.value) : [];
         setTemplates(Array.isArray(parsed) ? parsed : []);
       } catch (e) {
@@ -129,7 +130,7 @@ export default function EditPreviewCard4() {
   const persistTemplates = async (next) => {
     setTemplates(next);
     try {
-      const result = await window.storage.set(TEMPLATES_KEY, JSON.stringify(next), false);
+      const result = await storage.set(TEMPLATES_KEY, JSON.stringify(next));
       if (!result) throw new Error("save failed");
       setTemplatesError("");
     } catch (e) {
