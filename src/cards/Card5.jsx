@@ -13,6 +13,7 @@ import {
   FileJson,
   CheckCircle2,
 } from "lucide-react";
+import { storage } from "../storage.js";
 
 const ACCEPTED = ["image/png", "image/jpeg"];
 const RATIOS = [
@@ -148,7 +149,7 @@ export default function EditPreviewCard5() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await window.storage.get(TEMPLATES_KEY, false);
+        const res = await storage.get(TEMPLATES_KEY);
         const parsed = res?.value ? JSON.parse(res.value) : [];
         setTemplates(Array.isArray(parsed) ? parsed : []);
       } catch (e) {
@@ -162,7 +163,7 @@ export default function EditPreviewCard5() {
   const persistTemplates = async (next) => {
     setTemplates(next);
     try {
-      const result = await window.storage.set(TEMPLATES_KEY, JSON.stringify(next), false);
+      const result = await storage.set(TEMPLATES_KEY, JSON.stringify(next));
       if (!result) throw new Error("save failed");
       setTemplatesError("");
     } catch (e) {
