@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>두 AI 이어받기 비교 보고서</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --panel: #ffffff; --ink: #1d1b17; --muted: #6a655b; --line: #e3dfd5;
+    --accent: #b4561f; --ok: #1f7a4d; --warn: #9a6a00; --warn-bg: #fff6dc; --ok-bg: #e6f4ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141311; --panel: #1b1a17; --ink: #ede8df; --muted: #a39d90; --line: #322f28;
+      --accent: #e0925f; --ok: #6fcf9a; --warn: #e6c36a; --warn-bg: #2b2412; --ok-bg: #14261c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.65 -apple-system, "Pretendard", "Noto Sans KR", system-ui, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 26px; line-height: 1.3; margin: 0 0 8px; }
+  h2 { font-size: 18px; margin: 36px 0 12px; }
+  p { margin: 8px 0; }
+  .lead { color: var(--muted); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { font-variant-numeric: tabular-nums; }
+  code { font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--bg);
+    border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; word-break: break-all; }
+  a { color: var(--accent); }
+  .pass { color: var(--ok); font-weight: 600; }
+  .note { background: var(--warn-bg); border: 1px solid var(--line); border-left: 4px solid var(--warn);
+    border-radius: 8px; padding: 12px 14px; margin: 12px 0; }
+  .ok { background: var(--ok-bg); border: 1px solid var(--line); border-left: 4px solid var(--ok);
+    border-radius: 8px; padding: 12px 14px; margin: 12px 0; }
+  ol, ul { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; }
+  @media (max-width: 560px) {
+    table.cmp thead { display: none; }
+    table.cmp, table.cmp tbody, table.cmp tr, table.cmp th, table.cmp td { display: block; width: 100%; }
+    table.cmp tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    table.cmp tr:last-child { border-bottom: 0; }
+    table.cmp th, table.cmp td { border: 0; padding: 3px 4px; white-space: normal; }
+    table.cmp th { color: var(--ink); font-size: 14px; }
+    table.cmp td::before { content: attr(data-label); display: inline-block; min-width: 64px; margin-right: 8px;
+      color: var(--muted); font-size: 12px; font-weight: 600; }
+  }
+  .tl { list-style: none; padding: 0; margin: 0; }
+  .tl li { display: grid; grid-template-columns: 78px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .tl li:last-child { border-bottom: 0; }
+  .tl time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; }
+  @media (max-width: 520px) { .tl li { grid-template-columns: 1fr; gap: 2px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>대화가 끊겨도 이어지는 작업: 두 AI 비교 보고서</h1>
+  <p class="lead">같은 저장소에서 작업자 1이 시작하고, 작업자 2가 저장소와 인수인계 문서만 받아 이어서 끝냈습니다. 모델 이름은 가렸고 측정값으로만 비교합니다.</p>
+
+  <div class="ok">
+    <strong>한 줄 결과</strong><br>
+    개선 내용: 템플릿이 새로고침하면 사라지던 문제를 고쳤습니다(탭 4, 탭 5). 고정 검사 10개는 수정 전 6/10에서 두 작업자 모두 10/10까지 올라갔습니다.
+  </div>
+
+  <h2>1. 이름 가린 비교표</h2>
+  <div class="card scroll">
+    <table class="cmp">
+      <thead><tr><th>항목</th><th>작업자 1</th><th>작업자 2</th></tr></thead>
+      <tbody>
+        <tr><th>맡은 일</th><td data-label="작업자 1">원인 찾기, 검사 고정, 탭 4 수정, 인수인계 문서 작성</td><td data-label="작업자 2">문서만 보고 이어받아 탭 5 수정</td></tr>
+        <tr><th>실제 작업시간</th><td data-label="작업자 1" class="num">2분 35초<br><small>11:59:53 → 12:02:28</small></td><td data-label="작업자 2" class="num">18분 1초<br><small>12:25:08 → 12:43:09</small></td></tr>
+        <tr><th>요청 또는 호출 수</th><td data-label="작업자 1" class="num">도구 호출 15회<br><small>묶음 기준과 개별 기준이 같음</small></td><td data-label="작업자 2" class="num">30회 (묶음 기준)<br>53회 (개별 실행 합산)<br><small>모델 API 요청 수는 확인 불가</small></td></tr>
+        <tr><th>오류 회차 수<br><small>고정 검사 10개 중 하나 이상 FAIL인 실행 횟수</small></th><td data-label="작업자 1" class="num">1회<br><small>수정 전 기준 측정(6/10). 이후 실행 2회는 모두 10/10</small></td><td data-label="작업자 2" class="num">0회<br><small>보고된 실행 기준. 자체 실행 횟수는 미보고</small></td></tr>
+        <tr><th>검사 통과 수</th><td data-label="작업자 1" class="num pass">10 / 10</td><td data-label="작업자 2" class="num pass">10 / 10</td></tr>
+        <tr><th>시작 → 종료 고정 소스 버전</th>
+          <td data-label="작업자 1"><code>04088c2e</code> → <code>fcc33303</code></td>
+          <td data-label="작업자 2"><code>90387066</code> → <code>c79bcc8f</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <strong>비교할 때 알아 둘 점</strong>
+    <ul>
+      <li>두 일은 난이도가 같지 않습니다. 작업자 1은 원인을 찾아 구조를 정했고, 작업자 2는 문서가 알려준 수정을 적용했습니다.</li>
+      <li>작업자 1의 시간은 시작 기록 이후만 잽니다. 압축 파일을 읽고 원인을 찾던 시간은 포함되지 않아 실제보다 짧습니다.</li>
+      <li>상한(각 90분, 30회)을 정할 때 호출 수의 세는 단위는 정하지 않았습니다. 작업자 2는 묶음 기준이면 상한 이하, 개별 기준이면 초과입니다. 그래서 두 값을 모두 적었습니다.</li>
+      <li>재작업량은 제출 후 채점기가 계산하므로 직접 적지 않았습니다.</li>
+    </ul>
+  </div>
+
+  <h2>2. 작업 순서 기록</h2>
+  <div class="card">
+    <ul class="tl">
+      <li><time>11:59:53</time><span><strong>작업자 1 시작</strong>. 검사 10개와 공통 상한을 먼저 고정하고, 수정 전 코드로 기준 측정(6/10).</span></li>
+      <li><time>12:02:28</time><span><strong>작업자 1 종료·인수인계</strong>. 탭 4 완료, 10/10. 인수인계 문서에 탭 5가 남았다고 기록.</span></li>
+      <li><time>12:25:08</time><span><strong>작업자 2 시작</strong>. 새 대화, 저장소와 인수인계 문서만 제공.</span></li>
+      <li><time>12:43:09</time><span><strong>작업자 2 종료</strong>. 탭 5 수정, 고정 검사 변경 없이 10/10.</span></li>
+    </ul>
+  </div>
+
+  <h2>3. 고정 검사 10개</h2>
+  <p class="lead">작업 시작 전에 정했고, 이후 삭제·완화·기대값 변경이 0건입니다(저장소의 <code>checks/</code> 변경 이력으로 확인).</p>
+  <div class="card scroll">
+    <table>
+      <thead><tr><th>ID</th><th>입력</th><th>관찰 가능한 기대값</th></tr></thead>
+      <tbody>
+        <tr><td>T01</td><td>이름 "A"로 저장</td><td>목록에 "A"가 보이고 저장 실패 문구가 없음</td></tr>
+        <tr><td>T02</td><td>이름을 비우고 저장</td><td>"템플릿 1"이 보임</td></tr>
+        <tr><td>T03</td><td>저장 후 새로고침</td><td>목록에 남아 있음</td></tr>
+        <tr><td>T04</td><td>A, B 저장 후 새로고침</td><td>A, B가 이 순서로 2개</td></tr>
+        <tr><td>T05</td><td>문구·가로·크기·색·비율을 정해 저장 → 바꿈 → 불러오기</td><td>저장 당시 값으로 복원</td></tr>
+        <tr><td>T06</td><td>A, B 저장 → A 삭제 → 새로고침</td><td>B만 남음</td></tr>
+        <tr><td>T07</td><td>문구를 비운 채 저장</td><td>"(빈 문구)" 표시</td></tr>
+        <tr><td>T08</td><td>이름에 공백만 입력</td><td>"템플릿 1"이 보임</td></tr>
+        <tr><td>T09</td><td>크기 최솟값 2, 최댓값 20으로 각각 저장 후 불러오기</td><td>"희망 크기 2%", "희망 크기 20%"</td></tr>
+        <tr><td>T10</td><td>저장소 값을 깨진 JSON으로 두고 새로고침</td><td>빈 목록 안내가 보이고 화면이 정상</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>수정 전 6/10 → 작업자 1 종료 10/10 → 작업자 2 종료 10/10. 탭 5는 고정 검사 밖이라 별도 확인 4개(저장, 새로고침 유지, JSON 가져오기 유지, 깨진 JSON 거부)를 돌렸고, 수정 전에는 3개가 실패하고 수정 후에는 모두 통과했습니다.</p>
+
+  <h2>4. 소스와 확인 방법</h2>
+  <p>소스: <a href="https://github.com/mdkk0220/aleph-mk5/tree/c79bcc8fe355034b57a0aac7e71a6cddc84d3197">github.com/mdkk0220/aleph-mk5 (최종 커밋 c79bcc8)</a></p>
+  <div class="card">
+    <ol>
+      <li><strong>어디로 가나요</strong>: 이 보고서 주소를 시크릿 창에서 엽니다. 소스는 위 링크입니다.</li>
+      <li><strong>3단계 이내 무엇을 하나요</strong>: ① 위 비교표를 봅니다 → ② 소스를 내려받아 <code>npm install</code>, <code>npm run build</code> → ③ <code>checks/</code>의 검사를 실행합니다.</li>
+      <li><strong>무엇이 보이면 통과인가요</strong>: 비교표 숫자가 보이고, 검사 실행 마지막 줄에 <code>PASS 10/10</code>이 나옵니다.</li>
+      <li><strong>안 될 때 무엇이 보이나요</strong>: 빌드 오류 메시지, 또는 검사 줄에 <code>FAIL</code>과 실패한 검사 ID(T01 등)가 나옵니다.</li>
+    </ol>
+  </div>
+
+  <h2>5. 다음 작업의 도구 선택 기준</h2>
+  <div class="card">
+    <p>원인을 찾고 구조를 정하는 첫 작업은 시간과 호출 수가 적었던 작업자 1 방식으로, 문서만 보고 이어서 고치는 작업은 작업자 2 방식으로도 맡기되 둘 다 같은 고정 검사 10개로 결과를 확인한다.</p>
+  </div>
+
+  <h2>6. AI와 나의 판단</h2>
+  <div class="card">
+    <ol>
+      <li><strong>AI에게 맡긴 일</strong>: 코드 읽기와 원인 찾기, 검사 10개 초안과 실행기 작성, 저장소 어댑터 구현, 인수인계 문서 작성, 결과 독립 검증.</li>
+      <li><strong>직접 판단한 일</strong>: 고칠 기능 선택, 저장소와 프로젝트 이름 결정, 저장소 생성과 올리기, 다른 모델로 두 번째 작업자 선택, 태그가 가리킬 커밋 지정.</li>
+      <li><strong>AI 제안을 따르지 않은 일</strong>: 도구가 태그를 현재 main 기준으로 만들자고 제안했으나, 인수인계 문서의 버전 ID와 맞추려고 해당 커밋을 직접 지정했다.</li>
+    </ol>
+  </div>
+</main>
+</body>
+</html>
